@@ -32,3 +32,8 @@ https://www.mongodb.com/download-center/v2/community
 8. Open the localhost at 5500 port.
 9. Access the application directly deployed on cloud(heroku) using the following url 
 [URL-Shortener](https://urlshortnerapp.herokuapp.com)
+
+#### Addition :
+A small UI for user feasibility
+
+<img src="https://github.com/rastogi-s/Tiny-URL/blob/master/Capture.JPG?raw=true" />
