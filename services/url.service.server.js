@@ -26,9 +26,9 @@ module.exports = function (app) {
                     res.json(error);
                 else {
                     if (value != null && value !== '') {
-                        let protocol = 'http://';
+                        let protocol = 'http';
                         if (value.longUrl.substring(0, protocol.length) !== protocol)
-                            res.redirect(protocol + value.longUrl);
+                            res.redirect('http://' + value.longUrl);
                         else
                             res.redirect(value.longUrl);
                     }
@@ -45,9 +45,9 @@ module.exports = function (app) {
      * @param res
      */
     function createTinyUrl(req, res) {
-        var urls = req.body;
-        var longUrl = urls.longUrl;
-        addTinyUrl(req, res, longUrl)
+
+        var longUrl = req.body.longUrl;
+        addTinyUrl(req, res, trimUrl(longUrl))
     }
 
     /**
@@ -62,7 +62,8 @@ module.exports = function (app) {
      * @param newLongUrl randomly generated url
      */
     function addTinyUrl(req, res, newLongUrl) {
-        var longUrl = req.body.longUrl;
+        var longUrl = trimUrl(req.body.longUrl);
+
         var tinyUrl = generateTinyURL(newLongUrl);
         var url = require('url');
         var hostname = req.headers.host;
@@ -97,6 +98,7 @@ module.exports = function (app) {
      * @returns {string}
      */
     function generateTinyURL(longUrl) {
+
         let hashMD5 = md5(longUrl);
         hashMD5 = parseInt(hashMD5, 16).toString(2).padStart(8, '0').substring(0, 43);
         hashMD5 = parseInt(hashMD5, 2).toString(10).padStart(8, '0');
@@ -140,6 +142,25 @@ module.exports = function (app) {
                 res.send(status);
             })
 
+    }
+
+    /**
+     * Trims the url from protocols so that no different tiny url is generated for
+     * different protocols.
+     *
+     * @param longUrl
+     * @returns {*}
+     */
+    function trimUrl(longUrl){
+        let protocol = 'http://';
+        let secProtocol = 'https://';
+
+        if (longUrl.substring(0, protocol.length) === protocol)
+            longUrl = longUrl.substring(protocol.length,longUrl.length );
+        else if (longUrl.substring(0, secProtocol.length) === secProtocol)
+            longUrl = longUrl.substring(secProtocol.length,longUrl.length);
+
+        return longUrl;
     }
 
 
