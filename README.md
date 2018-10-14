@@ -29,4 +29,6 @@ Please use the below link to access the application on heroku
 https://www.mongodb.com/download-center/v2/community
 6. Start mongo Db server using commands ``mongod`` in command prompt and ``mongo`` in another.
 7. Run node.js application using ``node server``
-8. 
+8. Open the localhost at 5500 port.
+9. Access the application directly deployed on cloud(heroku) using the following url 
+[URL-Shortener](https://urlshortnerapp.herokuapp.com)
