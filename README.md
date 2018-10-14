@@ -33,7 +33,30 @@ https://www.mongodb.com/download-center/v2/community
 9. Access the application directly deployed on cloud(heroku) using the following url 
 [URL-Shortener](https://urlshortnerapp.herokuapp.com)
 
+#### API Documentation :
+
+Short URL:
+
+1. PUT:
+Create a new url using- ``\api``  <br>
+Pass the long url in body. Also returns the short URL in response.
+
+2. GET:
+Redirects to the long url using - ``\{tinyurl}``
+returns Not Found (404) in response if not present.
+
+3. GET:
+Get tiny url and the long url using- ``\api\{tinyurl}``
+Note: This should be removed as it can be bad for secured links. 
+
+4. DELETE:
+Delete the short url using : ``\api\{tinyurl}``
+
+Tested manually using POSTMAN.
+
 #### Addition :
 A small UI for user feasibility
 
 <img src="https://github.com/rastogi-s/Tiny-URL/blob/master/Capture.JPG?raw=true" />
+
+
