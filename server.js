@@ -7,6 +7,8 @@ var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// create view.
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.get('/', function (req, res) {
@@ -15,12 +17,16 @@ app.get('/', function (req, res) {
 
 
 // require mongoose
-var connectionString =   'mongodb://127.0.0.1:27017/tiny-url'; // for local
-if(process.env.MONGODB_URI) { // check if running remotely
+
+// for local connection string
+var connectionString =   'mongodb://127.0.0.1:27017/tiny-url';
+
+// check if running remotely
+if(process.env.MONGODB_URI) {
     connectionString = process.env.MONGODB_URI;
 }
 
-// connect with mongoose
+// create connection to mongodb
 var mongoose = require('mongoose');
 var global = mongoose.connect(connectionString,{useNewUrlParser : true});
 var db = mongoose.connection;
@@ -29,8 +35,7 @@ db.once('open', function () {
     console.log('connected with mongoose');
 });
 
-
-// configure rest end points access
+// configure the rest access.
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin",
         req.headers.origin);
@@ -41,6 +46,10 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
 });
+
+
+var urlService = require('./services/url.service.server');
+urlService(app);
 
 
 app.listen(process.env.PORT || 5500, function(){

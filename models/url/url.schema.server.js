@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-// create schema for url
+/** creates schema for url */
 var urlSchema = mongoose.Schema({
     tinyUrl: {type: String, unique: true, require: true, sparse: true},
     longUrl: {type: String, require: true},

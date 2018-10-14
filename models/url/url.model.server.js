@@ -1,9 +1,6 @@
-var mongoose =
-    require('mongoose');
-var urlSchema =
-    require('./url.schema.server');
-var urlModel = mongoose
-    .model('UrlModel', urlSchema);
+var mongoose = require('mongoose');
+var urlSchema = require('./url.schema.server');
+var urlModel = mongoose.model('UrlModel', urlSchema);
 
 
 module.exports = {
@@ -13,19 +10,35 @@ module.exports = {
     deleteTinyUrl: deleteTinyUrl
 };
 
-// check if the tiny url exists
+/**
+ * Checks if the tiny url exists
+ *
+ * @param tinyUrl
+ * @returns {Promise}
+ */
 function findTinyUrl(tinyUrl) {
     return urlModel.findOne({tinyUrl: tinyUrl}).catch(error => error);
 
 }
 
-// fetch long url corresponding to tiny url provided
+/**
+ * Fetch long url corresponding to tiny url provided.
+ *
+ * @param tinyUrl
+ * @returns {Promise}
+ */
 function findLongUrl(tinyUrl) {
     return urlModel.findOne({tinyUrl: tinyUrl}).catch(error => error);
 
 }
 
-// adds new tiny url if the provided tiny url does not exists
+/**
+ * Adds new tiny url if the provided tiny url does not exists.
+ *
+ * @param tinyUrl
+ * @param longUrl
+ * @returns {Promise}
+ */
 function createTinyUrl(tinyUrl, longUrl) {
 
     return urlModel.updateOne({tinyUrl: tinyUrl}, {
@@ -36,10 +49,14 @@ function createTinyUrl(tinyUrl, longUrl) {
     }, {upsert: true}).catch(error => error);
 }
 
-// delete the tiny url
+/**
+ * Delete the given tiny url.
+ *
+ * @param tinyUrl
+ * @returns {Promise}
+ */
 function deleteTinyUrl(tinyUrl) {
     return urlModel.deleteOne({tinyUrl: tinyUrl}).catch(error => error);
-    ;
 }
 
 
